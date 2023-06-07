@@ -11,14 +11,39 @@ const cities: City[] = [
     longitude: 139.6875,
   },
   {
-    name: "シドニー",
-    latitude: 29.563,
-    longitude: 106.5515,
+    name: "京都",
+    latitude: 35.01,
+    longitude: 135.45,
   },
   {
-    name: "キングストン",
-    latitude: 50.0528,
-    longitude: 8.5698,
+    name: "ワシントン",
+    latitude: 38.9041,
+    longitude: -77.0171,
+  },
+  {
+    name: "ニューヨーク",
+    latitude: 40.4246,
+    longitude: -74.0022,
+  },
+  {
+    name: "北京",
+    latitude: 39.9042,
+    longitude: 116.4073,
+  },
+  {
+    name: "ブラジリア",
+    latitude: -25.2743,
+    longitude: 133.7751,
+  },
+  {
+    name: "デリー",
+    latitude: 28.64,
+    longitude: 77.209,
+  },
+  {
+    name: "モスクワ",
+    latitude: 55.45,
+    longitude: 37.37,
   },
 ]
 
