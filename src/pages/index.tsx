@@ -93,7 +93,7 @@ export default function Home() {
 
       <h1 className="pt-10 text-xl font-bold">{currentCity.name}の天気</h1>
 
-      <select onChange={onChangeCity} className="mt-10">
+      <select onChange={onChangeCity} className="mt-10 bg-inherit border">
         {cities.map((city, index) => (
           <option
             key={`city-${index}`}
