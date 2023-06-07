@@ -1,15 +1,7 @@
 import { useEffect, useState } from 'react'
 
-type City = {
-  name: string
-  latitude: number
-  longitude: number 
-}
-
-type Weather = {
-  date: string
-  weather: string
-}
+import { convertWeathercodetoText } from '@/utils'
+import { City, Weather, WeatherResponse } from '@/types'
 
 const cities: City[] = [
   {
@@ -29,25 +21,7 @@ const cities: City[] = [
   },
 ]
 
-type WeatherResponse = {
-    latitude: number
-    longitude: number
-    generationtime_ms: number
-    utc_offset_seconds: number
-    timezone: string
-    timezone_abbreviation: string
-    elevation: number
-    daily_units: {
-        time: string
-        weathercode: string
-    }
-    daily: {
-        time: string[],
-        weathercode: number[],
-    }
-}
-
-const fetchWeather = async (city: City): Promise<Weather[]> => {
+const fetchWeathers = async (city: City): Promise<Weather[]> => {
   const queries = new URLSearchParams({
     latitude: city.latitude.toString(),
     longitude: city.longitude.toString(),
@@ -69,54 +43,6 @@ const fetchWeather = async (city: City): Promise<Weather[]> => {
   return weathers
 }
 
-const convertWeathercodetoText = (weathercode: number) => {
-  switch (weathercode) {
-    case 0:
-      return "Clear sky"
-    case 1:
-    case 2:
-    case 3:
-      return "Mainly clear, partly cloudy, and overcast"
-    case 45:
-    case 48:
-      return "Fog and depositing rime fog"
-    case 51:
-    case 53:
-    case 55:
-      return "Drizzle: Light, moderate, and dense intensity"
-    case 56:
-    case 57:
-      return "Freezing Drizzle: Light and dense intensity"
-    case 61:
-    case 63:
-    case 65:
-      return "Rain: Slight, moderate and heavy intensity"
-    case 66:
-    case 67:
-      return "Freezing Rain: Light and heavy intensity"
-    case 71:
-    case 73:
-    case 75:
-      return "Snow fall: Slight, moderate, and heavy intensity"
-    case 77:
-      return "Snow grains"
-    case 80:
-    case 81:
-    case 82:
-      return "Rain showers: Slight, moderate, and violent"
-    case 85:
-    case 86:
-      return "Snow showers slight and heavy"
-    case 95:
-      return "Thunderstorm: Slight or moderate"
-    case 96:
-    case 99:
-      return "Thunderstorm with slight and heavy hail"
-    default:
-      return ""
-  }
-}
-
 export default function Home() {
   const [weathers, setWeathers] = useState<null | Weather[]>(null)
   const [currentCity, setCurrentCity] = useState<City>(cities[0])
@@ -127,7 +53,7 @@ export default function Home() {
 
   useEffect(() => {
     (async () => {
-      const weathers = await fetchWeather(currentCity)
+      const weathers = await fetchWeathers(currentCity)
       setWeathers(weathers)
     })()
   }, [currentCity])
