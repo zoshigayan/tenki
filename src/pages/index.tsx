@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import Head from 'next/head'
 
 import { convertWeathercodetoText } from '@/utils'
 import { City, Weather, WeatherResponse } from '@/types'
@@ -60,6 +61,10 @@ export default function Home() {
 
   return (
     <>
+      <Head>
+        <title>ファイターゆかりの地の天気</title>
+      </Head>
+
       <h1>{currentCity.name}の天気</h1>
 
       <select onChange={onChangeCity}>
