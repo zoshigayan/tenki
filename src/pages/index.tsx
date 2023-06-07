@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import Head from 'next/head'
+import Image from 'next/image'
 
 import { convertWeathercodetoText } from '@/utils'
 import { City, Weather, WeatherResponse } from '@/types'
@@ -61,7 +62,7 @@ const fetchWeathers = async (city: City): Promise<Weather[]> => {
   let weathers = []
   for (let i = 0; i < weathercode.length; i++) {
     weathers.push({
-      date: time[i].replaceAll("-", "/"),
+      date: time[i].replace(/20[0-9]{2}-/, "").replace("-", "/"),
       weather: convertWeathercodetoText(weathercode[i]),
     })
   }
@@ -85,14 +86,14 @@ export default function Home() {
   }, [currentCity])
 
   return (
-    <>
+    <div className="container mx-auto max-w-3xl">
       <Head>
         <title>ファイターゆかりの地の天気</title>
       </Head>
 
-      <h1>{currentCity.name}の天気</h1>
+      <h1 className="pt-10 text-xl font-bold">{currentCity.name}の天気</h1>
 
-      <select onChange={onChangeCity}>
+      <select onChange={onChangeCity} className="mt-10">
         {cities.map((city, index) => (
           <option
             key={`city-${index}`}
@@ -102,9 +103,17 @@ export default function Home() {
         ))}
       </select>
 
+      <Image
+        src={`/${cities.findIndex(city => city.name === currentCity.name) + 1}.png`}
+        alt=""
+        width="200"
+        height="200"
+        className="mt-10"
+      />
+
       {weathers
         ? (
-          <table>
+          <table className="mt-10 w-full border border-collapse table-fixed">
             <thead>
               <tr>
                 {weathers.map((weather, key) => (
@@ -115,14 +124,16 @@ export default function Home() {
             <tbody>
               <tr>
                 {weathers.map((weather, key) => (
-                  <td key={`weather-body-${key}`}>{weather.weather}</td>
+                  <td key={`weather-body-${key}`} className="h-md text-center">
+                    {weather.weather}
+                  </td>
                 ))}
               </tr>
             </tbody>
           </table>
         )
         : null}
-    </>
+    </div>
   )
 }
 
